@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./db
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - mynet
+
+  app:
+    build: ./app
+    depends_on:
+      - db
+    networks:
+      - mynet
+
+volumes:
+  db_data:
+
+networks:
+  mynet:
